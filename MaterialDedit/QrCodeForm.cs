@@ -18,16 +18,21 @@ namespace MaterialDedit
     public partial class QrCodeForm : Form
     {
         private ListView shtListView = null;
+        private bool isDebug = false;
         private SheetListEx m_sheetList = null;
         public List<SLTQrCodeItem> _SLTQrCodeList = new List<SLTQrCodeItem>();
         private NestParamEx m_nestParam = null;
         public QrCodeForm(ListView shtListView, SheetListEx m_sheetList, NestParamEx nestParam)
         {
-            this.Size = new Size(400, 600);
             this.shtListView = shtListView;
             m_nestParam = nestParam;
             this.m_sheetList = m_sheetList;
             InitializeComponent();
+            cbShadowBmp.Visible = isDebug;
+            Paneltext.Visible = isDebug;
+            panelQr.Visible = isDebug;
+            panelQrCode.Visible = isDebug;
+            this.Size = new Size(450, 670);
         }
 
         private void QrCodeForm_Load(object sender, EventArgs e)
@@ -37,15 +42,15 @@ namespace MaterialDedit
             SolidBrush blackBrush = new SolidBrush(Color.Black);
             HatchBrush hatchBrush = new HatchBrush(HatchStyle.BackwardDiagonal, Color.Black, Color.White);
             //外边距
-            int space = 5;
+            int space = 2;
 
-            for (int count = 0; count < shtListView.Items.Count; count++)
+            for (int length = 0; length < shtListView.Items.Count; length++)
             {
                 SLTQrCodeItem SLTQrCodeItemTemp = new SLTQrCodeItem()
                 {
                     SLTBmpShadowList = new List<SLTShadowBmp>()
                 };
-                ListViewItem item = shtListView.Items[count];
+                ListViewItem item = shtListView.Items[length];
                 long iSheetID = (long)item.Tag;
                 SheetEx sheet = m_sheetList.GetSheetByID(iSheetID);
                 string M_Name = sheet.GetMat().GetName();
@@ -102,37 +107,32 @@ namespace MaterialDedit
                     }
                     SLTQrCodeItemTemp.SLTBmpShadowList[i].ShadowBmp = copy;
                     PartEx partEx = partPmtList.GetPartList().GetPartByIndex(i);
-
-                    var view = partPmtList.GetPartList();
-
                     string OrderNo = OrderManagerDal.Instance.GetOrder(partEx.GetID());
-                    string partName = partEx.GetName().Substring(1, 1);
-                    SLTQrCodeItemTemp.SLTBmpShadowList[i].QrCodeText = OrderNo + "-" + partName;
-                    SLTQrCodeItemTemp.SLTBmpShadowList[i].QrCodeBmp = GenerateQRCode(partName);
+                    string partNameIndex = partEx.GetName().Substring(1, 1);
+                    string partName = partEx.GetName();
+                    SLTQrCodeItemTemp.SLTBmpShadowList[i].QrCodeText = OrderNo + "-" + partNameIndex;
+                    SLTQrCodeItemTemp.SLTBmpShadowList[i].QrCodeBmp = GenerateQRCode(partNameIndex);
                     //字体
-                    Font font = new Font("Arial Bold", 6f);//粗体 10号
+                    Font font = new Font("微软雅黑", 60f);//8号
                     //设定字体格式  
                     StringFormat format = new StringFormat()
                     {
                         Alignment = StringAlignment.Center,
                         LineAlignment = StringAlignment.Center,
                     };
-                    string text1 = OrderNo + "-" + partName + "\r\n" + partName;
+                    string text1 = OrderNo + "-" + partNameIndex;
                     string text2 = partName;
                     string text3 = Shapeitem.SLTPartInfos.PartWidth + "*" + Shapeitem.SLTPartInfos.PartHeight;
                     string text4 = Shapeitem.SLTPartInfos.MatName;
                     SLTQrCodeItemTemp.SLTBmpShadowList[i].SLTText = text1 + "\r\n" + text2 + "\r\n" + text3 + "\r\n" + text4;
-                    List<int> widthTemp = new List<int>();
-                    widthTemp.Add(TextRenderer.MeasureText(text1, font).Width);
-                    widthTemp.Add(TextRenderer.MeasureText(text2, font).Width);
-                    widthTemp.Add(TextRenderer.MeasureText(text3, font).Width);
-                    widthTemp.Add(TextRenderer.MeasureText(text4, font).Width);
-                    widthTemp.Sort();
-                    Bitmap textBmp = new Bitmap(widthTemp[0], widthTemp[0]);
+                    Size SLTTextSize = TextRenderer.MeasureText(SLTQrCodeItemTemp.SLTBmpShadowList[i].SLTText, font);
+                    Bitmap textBmp = new Bitmap(SLTTextSize.Width + space + 5, SLTTextSize.Width + space + 5);
                     using (Graphics gTextTemp = Graphics.FromImage(textBmp))
                     {
-                        gTextTemp.DrawString(SLTQrCodeItemTemp.SLTBmpShadowList[i].SLTText
-                            , font, blackBrush, new RectangleF(space, space, textBmp.Width - space, textBmp.Height - space));
+                        gTextTemp.Clear(Color.White);
+                        gTextTemp.SmoothingMode = SmoothingMode.HighQuality;
+                        gTextTemp.DrawString(SLTQrCodeItemTemp.SLTBmpShadowList[i].SLTText, font, blackBrush,
+                            new RectangleF(space, (textBmp.Height - SLTTextSize.Height - (2 * space)) / 2 + space, textBmp.Width - space, textBmp.Height - space));
                     }
                     SLTQrCodeItemTemp.SLTBmpShadowList[i].SLTTextBmp = textBmp;
                 }
@@ -140,6 +140,118 @@ namespace MaterialDedit
                 //g.DrawString(partName, font, blackBrush, new RectangleF(0, 0, 100, 100), format);
                 //g.DrawImage(qrBmp, 150, 150, 50, 50);
             }
+
+            //
+            int bmpPrintWidth = 500;
+            int Colunm = 2;
+            List<Shape> positionBase = new List<Shape>();
+            int count = 0;
+            for (int i = 0; i < _SLTQrCodeList.Count; i++)
+            {
+                for (int j = 0; j < _SLTQrCodeList[i].SLTBmpShadowList.Count; j++)
+                {
+                    count++;
+                }
+            }
+            for (int i = 0; i < count; i++)
+            {
+                for (int j = 0; j < Colunm; j++)
+                {
+                    if (i * j + j >= count)
+                    {
+                        break;
+                    }
+                    Shape itemTemp = new Shape()
+                    {
+                        PoX = j * (bmpPrintWidth / Colunm),
+                        PoY = i * (bmpPrintWidth / Colunm),
+                        PartWidth = bmpPrintWidth / Colunm,
+                        PartHeight = bmpPrintWidth / Colunm,
+                    };
+                    positionBase.Add(itemTemp);
+                }
+            }
+
+            int bmpPrintHeight = ((positionBase.Count / Colunm) + (positionBase.Count % Colunm)) * (bmpPrintWidth / Colunm);
+            Bitmap PrintBmp = new Bitmap(bmpPrintWidth, bmpPrintHeight);
+            using (Graphics gPrint = Graphics.FromImage(PrintBmp))
+            {
+                gPrint.Clear(Color.White);
+                count = 0;
+                for (int i = 0; i < _SLTQrCodeList.Count; i++)
+                {
+                    for (int j = 0; j < _SLTQrCodeList[i].SLTBmpShadowList.Count; j++)
+                    {
+
+                        float TextPx = positionBase[count].PoX;
+                        float TextPy = positionBase[count].PoY + positionBase[count].PartHeight * 0.1f;
+                        float QrCodePx = TextPx;
+                        float QrCodePy = positionBase[count].PoY + positionBase[count].PartHeight * 0.5f;
+
+                        float SLTPx = positionBase[count].PoX + positionBase[count].PartWidth * 0.4f;
+                        float SLTPy = positionBase[count].PoY;
+                        Size SLTSize = _SLTQrCodeList[i].SLTBmpShadowList[j].ShadowBmp.Size;
+                        float SLTWidth = (int)(positionBase[count].PartHeight * SLTSize.Width / SLTSize.Height);
+                        float SLTHeight = (int)(positionBase[count].PartHeight);
+                        Bitmap SLTBmpTemp = _SLTQrCodeList[i].SLTBmpShadowList[j].ShadowBmp;
+                        float scale = (float)SLTSize.Width / (float)SLTSize.Height;
+                        if (scale < 0.6f)//固定高度
+                        {
+                            SLTWidth = (int)(positionBase[count].PartHeight * SLTSize.Width / SLTSize.Height);
+                            SLTHeight = positionBase[count].PartHeight;
+                        }
+                        else if (0.6f < scale && scale < 1)//固定宽度
+                        {
+                            SLTWidth = positionBase[count].PartWidth * 0.6f;
+                            SLTHeight = (int)(positionBase[count].PartWidth * 0.6f * SLTSize.Height / SLTSize.Width);
+                        }
+                        else if (scale > 1)//旋转
+                        {
+                            SLTWidth = positionBase[count].PartWidth * 0.6f;
+                            SLTHeight = (int)(positionBase[count].PartWidth * 0.6f * SLTSize.Height / SLTSize.Width);
+                            //SLTBmpTemp = new Bitmap(SLTSize.Width, SLTSize.Height);
+                            //using (Graphics gCcopy = Graphics.FromImage(SLTBmpTemp))
+                            //{
+                            //    gCcopy.Clear(Color.White);
+                            //    gCcopy.TranslateTransform(0, 0); //源点移动到旋转中心
+                            //    gCcopy.RotateTransform(90f); //旋转
+                            //    Rectangle imageRectangle = new Rectangle(0, 0, SLTSize.Width, SLTSize.Height);
+                            //    gCcopy.DrawImage(_SLTQrCodeList[i].SLTBmpShadowList[j].ShadowBmp, imageRectangle, imageRectangle, GraphicsUnit.Pixel);
+                            //}
+                            //scale = SLTSize.Height / SLTSize.Width;
+                            //if (0.6f < scale && scale < 1)//固定高度
+                            //{
+                            //    SLTWidth = (int)(positionBase[count].PartHeight * SLTSize.Width / SLTSize.Height);
+                            //    SLTHeight = positionBase[count].PartHeight;
+                            //}
+                            //else if (0.6f < scale && scale < 1)//固定宽度
+                            //{
+                            //    SLTWidth = positionBase[count].PartWidth * 0.6f;
+                            //    SLTHeight = (int)(positionBase[count].PartWidth * 0.6f * SLTSize.Height / SLTSize.Width);
+                            //}
+                        }
+                        //else//固定高度
+                        //{
+                        //    SLTWidth = (int)(positionBase[count].PartHeight * SLTSize.Width / SLTSize.Height);
+                        //    SLTHeight = positionBase[count].PartHeight;
+                        //}
+                        gPrint.DrawImage(_SLTQrCodeList[i].SLTBmpShadowList[j].SLTTextBmp,
+                            TextPx, TextPy,
+                            (int)(positionBase[count].PartWidth * 0.4),
+                            (int)(positionBase[count].PartHeight * 0.4));
+                        gPrint.DrawImage(_SLTQrCodeList[i].SLTBmpShadowList[j].QrCodeBmp,
+                           QrCodePx, QrCodePy,
+                           (int)(positionBase[count].PartWidth * 0.4),
+                           (int)(positionBase[count].PartHeight * 0.4));
+                        gPrint.DrawImage(SLTBmpTemp, SLTPx, SLTPy, SLTWidth, SLTHeight);
+                        count++;
+                    }
+                }
+
+            }
+            panelQrCodePrint.BackgroundImage = PrintBmp;
+            panelQrCodePrint.BackgroundImageLayout = ImageLayout.Stretch;
+
             for (int i = 0; i < _SLTQrCodeList.Count; i++)
             {
                 for (int j = 0; j < _SLTQrCodeList[i].SLTBmpShadowList.Count; j++)
