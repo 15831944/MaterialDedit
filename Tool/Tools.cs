@@ -21,6 +21,8 @@ namespace Tool
                 formatter.Serialize(objectStream, RealObject);
                 objectStream.Seek(0, SeekOrigin.Begin);
                 return (T)formatter.Deserialize(objectStream);
+
+
             }
         }
 
