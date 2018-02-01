@@ -39,6 +39,8 @@ namespace MaterialDedit
         {
             int v = 0;
 
+            int vv = 0;
+            int vvv = 0;
             Pen blackPen = new Pen(Color.Black, 1);
             Pen blackPen2 = new Pen(Color.Black, 2);
             SolidBrush blackBrush = new SolidBrush(Color.Black);
