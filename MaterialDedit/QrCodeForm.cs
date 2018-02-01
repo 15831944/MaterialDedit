@@ -38,6 +38,7 @@ namespace MaterialDedit
         private void QrCodeForm_Load(object sender, EventArgs e)
         {
             int v = 0;
+
             Pen blackPen = new Pen(Color.Black, 1);
             Pen blackPen2 = new Pen(Color.Black, 2);
             SolidBrush blackBrush = new SolidBrush(Color.Black);
