@@ -80,7 +80,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 490);
+            this.ClientSize = new System.Drawing.Size(432, 490);
             this.Controls.Add(this.Paneltext);
             this.Controls.Add(this.panelQrCode);
             this.Controls.Add(this.panelQrCodePrint);
