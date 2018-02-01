@@ -31,7 +31,7 @@ namespace MaterialDedit
             cbShadowBmp.Visible = isDebug;
             Paneltext.Visible = isDebug;
             panelQr.Visible = isDebug;
-            panelQrCode.Visible = isDebug;
+            panelQrCode.Visible = isDebug; 
             this.Size = new Size(450, 670);
         }
 
