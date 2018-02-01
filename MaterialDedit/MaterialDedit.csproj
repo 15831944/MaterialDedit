@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{823B81C2-8240-40CE-B591-7E190461FE0E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MaterialDedit</RootNamespace>
+    <AssemblyName>MaterialDedit</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Gma.QrCodeNet.Encoding.Net45, Version=0.4.0.0, Culture=neutral, PublicKeyToken=e8a75d24b142be49, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\Gma.QrCodeNet.Encoding.Net45.dll</HintPath>
+    </Reference>
+    <Reference Include="nestBridge, Version=1.0.6527.35812, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\nestBridge.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Net35, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\Newtonsoft.Json.Net35.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdvParamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdvParamForm.Designer.cs">
+      <DependentUpon>AdvParamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AllResultsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AllResultsForm.Designer.cs">
+      <DependentUpon>AllResultsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DemoForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DemoForm.Designer.cs">
+      <DependentUpon>DemoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMainWindow.Designer.cs">
+      <DependentUpon>FrmMainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="helpers\DrawHelper.cs" />
+    <Compile Include="helpers\NestHelper.cs" />
+    <Compile Include="helpers\NestResult.cs" />
+    <Compile Include="helpers\NestRstWatcher.cs" />
+    <Compile Include="helpers\TaskStorage.cs" />
+    <Compile Include="MaterialForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaterialForm.Designer.cs">
+      <DependentUpon>MaterialForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NestParamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NestParamForm.Designer.cs">
+      <DependentUpon>NestParamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NestPartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NestPartForm.Designer.cs">
+      <DependentUpon>NestPartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NestResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NestResultForm.Designer.cs">
+      <DependentUpon>NestResultForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QrCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QrCodeForm.Designer.cs">
+      <DependentUpon>QrCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RemnantMatInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemnantMatInfoForm.Designer.cs">
+      <DependentUpon>RemnantMatInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SheetInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SheetInfoForm.Designer.cs">
+      <DependentUpon>SheetInfoForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AdvParamForm.resx">
+      <DependentUpon>AdvParamForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllResultsForm.resx">
+      <DependentUpon>AllResultsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DemoForm.resx">
+      <DependentUpon>DemoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMainWindow.resx">
+      <DependentUpon>FrmMainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaterialForm.resx">
+      <DependentUpon>MaterialForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NestParamForm.resx">
+      <DependentUpon>NestParamForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NestPartForm.resx">
+      <DependentUpon>NestPartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NestResultForm.resx">
+      <DependentUpon>NestResultForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="QrCodeForm.resx">
+      <DependentUpon>QrCodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemnantMatInfoForm.resx">
+      <DependentUpon>RemnantMatInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SheetInfoForm.resx">
+      <DependentUpon>SheetInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dll\Gma.QrCodeNet.Encoding.Net45.dll" />
+    <Content Include="dll\lpsolve55.dll" />
+    <Content Include="dll\nestBridge.dll" />
+    <Content Include="dll\nestKernel.dll" />
+    <Content Include="dll\Newtonsoft.Json.Net35.dll" />
+    <Content Include="dll\WW.Cad.dll" />
+    <Content Include="dll\WW.Cad_0.dll" />
+    <Content Include="dll\WW.dll" />
+    <Content Include="dll\WW.GL.dll" />
+    <Content Include="dll\WW.License.dll" />
+    <Content Include="dll\WW.Pdf.dll" />
+    <Content Include="image\nest_dir_x.bmp" />
+    <Content Include="image\nest_dir_y.bmp" />
+    <Content Include="image\part.bmp" />
+    <Content Include="image\partpmt.bmp" />
+    <Content Include="image\part_space.bmp" />
+    <Content Include="image\polygon.bmp" />
+    <Content Include="image\poly_mat_margin.bmp" />
+    <Content Include="image\rect_mat_margin.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{33308d96-8c82-45a5-989b-827b0be69094}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OrderManager\OrderManager.csproj">
+      <Project>{42ad1cce-9952-4f51-8c8c-4285bebf3331}</Project>
+      <Name>OrderManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tool\Tool.csproj">
+      <Project>{22f8feac-2a92-4847-991e-8596016dce16}</Project>
+      <Name>Tool</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
